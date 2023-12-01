@@ -1,15 +1,16 @@
 import pygame
+
 pygame.init()
 WIDTH = 1000
 HEIGHT = 900
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
-pygame.display.set_caption('Two player')
+pygame.display.set_caption('Chess GDSC 2D Games')
 font = pygame.font.Font('freesansbold.ttf', 20)
 medium_font = pygame.font.Font('freesansbold.ttf', 40)
 big_font = pygame.font.Font('freesansbold.ttf', 50)
 timer = pygame.time.Clock()
 fps = 60
-White_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
+white_pieces = ['rook', 'knight', 'bishop', 'king', 'queen', 'bishop', 'knight', 'rook',
                 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn', 'pawn']
 white_locations = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                    (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1)]
@@ -22,40 +23,40 @@ captured_pieces_black = []
 turn_step = 0
 selection = 100
 valid_moves = []
-black_queen = pygame.image.load('C:/Users/Suong/Downloads/queen (1).png')
+black_queen = pygame.image.load('assets/images/black queen.png')
 black_queen = pygame.transform.scale(black_queen, (80, 80))
 black_queen_small = pygame.transform.scale(black_queen, (45, 45))
-black_king = pygame.image.load('C:/Users/Suong/Downloads/king (1).png')
+black_king = pygame.image.load('assets/images/black king.png')
 black_king = pygame.transform.scale(black_king, (80, 80))
 black_king_small = pygame.transform.scale(black_king, (45, 45))
-black_rook = pygame.image.load('C:/Users/Suong/Downloads/rook (1).png')
+black_rook = pygame.image.load('assets/images/black rook.png')
 black_rook = pygame.transform.scale(black_rook, (80, 80))
 black_rook_small = pygame.transform.scale(black_rook, (45, 45))
-black_bishop = pygame.image.load('C:/Users/Suong/Downloads/bishop (1).png')
+black_bishop = pygame.image.load('assets/images/black bishop.png')
 black_bishop = pygame.transform.scale(black_bishop, (80, 80))
 black_bishop_small = pygame.transform.scale(black_bishop, (45, 45))
-black_knight = pygame.image.load('C:/Users/Suong/Downloads/knight (1).png')
+black_knight = pygame.image.load('assets/images/black knight.png')
 black_knight = pygame.transform.scale(black_knight, (80, 80))
 black_knight_small = pygame.transform.scale(black_knight, (45, 45))
-black_pawn = pygame.image.load('C:/Users/Suong/Downloads/pawn (1).png')
+black_pawn = pygame.image.load('assets/images/black pawn.png')
 black_pawn = pygame.transform.scale(black_pawn, (65, 65))
 black_pawn_small = pygame.transform.scale(black_pawn, (45, 45))
-white_queen = pygame.image.load('C:/Users/Suong/Downloads/queen.png')
+white_queen = pygame.image.load('assets/images/white queen.png')
 white_queen = pygame.transform.scale(white_queen, (80, 80))
 white_queen_small = pygame.transform.scale(white_queen, (45, 45))
-white_king = pygame.image.load('C:/Users/Suong/Downloads/king.png')
+white_king = pygame.image.load('assets/images/white king.png')
 white_king = pygame.transform.scale(white_king, (80, 80))
 white_king_small = pygame.transform.scale(white_king, (45, 45))
-white_rook = pygame.image.load('C:/Users/Suong/Downloads/rook.png')
+white_rook = pygame.image.load('assets/images/white rook.png')
 white_rook = pygame.transform.scale(white_rook, (80, 80))
 white_rook_small = pygame.transform.scale(white_rook, (45, 45))
-white_bishop = pygame.image.load('C:/Users/Suong/Downloads/bishop.png')
+white_bishop = pygame.image.load('assets/images/white bishop.png')
 white_bishop = pygame.transform.scale(white_bishop, (80, 80))
 white_bishop_small = pygame.transform.scale(white_bishop, (45, 45))
-white_knight = pygame.image.load('C:/Users/Suong/Downloads/knight.png')
+white_knight = pygame.image.load('assets/images/white knight.png')
 white_knight = pygame.transform.scale(white_knight, (80, 80))
 white_knight_small = pygame.transform.scale(white_knight, (45, 45))
-white_pawn = pygame.image.load('C:/Users/Suong/Downloads/pawn.png')
+white_pawn = pygame.image.load('assets/images/white pawn.png')
 white_pawn = pygame.transform.scale(white_pawn, (65, 65))
 white_pawn_small = pygame.transform.scale(white_pawn, (45, 45))
 white_images = [white_pawn, white_queen, white_king, white_knight, white_rook, white_bishop]
@@ -65,9 +66,12 @@ black_images = [black_pawn, black_queen, black_king, black_knight, black_rook, b
 small_black_images = [black_pawn_small, black_queen_small, black_king_small, black_knight_small,
                       black_rook_small, black_bishop_small]
 piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
+# check variables/ flashing counter
 counter = 0
 winner = ''
 game_over = False
+
+# draw main game board
 def draw_board():
     for i in range(32):
         column = i % 4
@@ -87,6 +91,7 @@ def draw_board():
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
         screen.blit(medium_font.render('FORFEIT', True, 'black'), (810, 830))
 
+# draw pieces onto board
 def draw_pieces():
     for i in range(len(white_pieces)):
         index = piece_list.index(white_pieces[i])
@@ -127,30 +132,24 @@ def draw_captured():
         index = piece_list.index(captured_piece)
         screen.blit(small_white_images[index], (925, 5 + 50 * i))
 
-def draw_check():
-    if turn_step < 2:
-        if 'king' in white_pieces:
-            king_index = white_pieces.index('king')
-            king_location = white_locations[king_index]
-            for i in range(len(black_options)):
-                if king_location in black_options[i]:
-                    if counter < 15:
-                        pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
-                                                              white_locations[king_index][1] * 100 + 1, 100, 100], 5)
-    else:
-        if 'king' in black_pieces:
-            king_index = black_pieces.index('king')
-            king_location = black_locations[king_index]
-            for i in range(len(white_options)):
-                if king_location in white_options[i]:
-                    if counter < 15:
-                        pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
-                                                               black_locations[king_index][1] * 100 + 1, 100, 100], 5)
-
 
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 400, 70])
     screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
     screen.blit(font.render(f'Press ENTER to Restart!', True, 'white'), (210, 240))
 
-
+# main game loop
+run = True
+while run:
+    timer.tick(fps)
+    screen.fill('black')
+    draw_board()
+    draw_pieces()
+    
+    #event handling
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+    
+    pygame.display.flip()
+pygame.quit()

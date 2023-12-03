@@ -172,7 +172,7 @@ def draw_check():
 def check_options(pieces, locations, turn):
     moves_list = []
     all_moves_list = []
-    for i in range((pieces)):
+    for i in range(len((pieces))):
         location = locations[i]
         piece = pieces[i]
         if piece == 'pawn':

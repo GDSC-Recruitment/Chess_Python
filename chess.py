@@ -142,6 +142,10 @@ def draw_game_over():
 run = True
 while run:
     timer.tick(fps)
+    if counter < 30: 
+        counter += 1
+    else: 
+        counter = 0
     screen.fill('black')
     draw_board()
     draw_pieces()

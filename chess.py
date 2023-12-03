@@ -312,7 +312,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not game_over:
             x_coord = event.pos[0]//100
             y_coord = event.pos[1]//100
             click_coords = (x_coord, y_coord)
@@ -326,6 +326,9 @@ while run:
                     if click_coords in black_locations: #trang an den
                         black_piece = black_locations.index(click_coords)
                         captured_pieces_white.append(black_pieces[black_piece])
+                        #Check if white is a winner
+                        if black_pieces[black_pieces] == 'king':
+                            winner = 'white'
                         black_pieces.pop(black_piece)
                         black_locations.pop(black_piece)
                     black_options = check_options(black_pieces, black_locations, 'black')
@@ -344,6 +347,9 @@ while run:
                     if click_coords in white_locations: #den an trang
                         white_piece = white_locations.index(click_coords)
                         captured_pieces_black.append(white_pieces[white_piece])
+                        #Check if black is a winner
+                        if white_pieces[white_pieces] == 'king':
+                            winner = 'black'
                         white_pieces.pop(white_piece)
                         white_locations.pop(white_piece)
                     black_options = check_options(black_pieces,black_locations,'black')
@@ -351,6 +357,11 @@ while run:
                     turn_step = 0
                     selection = 100
                     valid_moves = []
+    #Game over handling
+    if winner != ' ' :
+        game_over = True
+        draw_game_over()
+        
 
     
     pygame.display.flip()

@@ -114,6 +114,17 @@ def draw_pieces():
             if selection == i:
                 pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1,
                                                   100, 100], 2)
+                
+# check for valid moves for just selected piece
+def check_valid_moves():
+    if turn_step < 2:
+        options_list = white_options
+    else:
+        options_list = black_options
+    valid_options = options_list[selection]
+    return valid_options
+
+# draw valid moves on screen
 def draw_valid(moves):
     if turn_step < 2:
         color = 'red'
@@ -122,6 +133,7 @@ def draw_valid(moves):
     for i in range(len(moves)):
         pygame.draw.circle(screen, color, (moves[i][0] * 100 + 50, moves[i][1] * 100 + 50), 5)
 
+# draw captured pieces on side of screen
 def draw_captured():
     for i in range(len(captured_pieces_white)):
         captured_piece = captured_pieces_white[i]
@@ -185,8 +197,8 @@ def check_options(pieces, locations, turn):
             moves_list = check_bishop(location, turn)
         elif piece == 'queen':
             moves_list = check_queen(location, turn)
-        elif piece == 'king':
-            moves_list = check_king(location, turn)
+        '''elif piece == 'king':
+            moves_list = check_king(location, turn)'''
         all_moves_list.append(moves_list)
     return all_moves_list
 
@@ -290,7 +302,11 @@ while run:
     screen.fill('black')
     draw_board()
     draw_pieces()
+    draw_captured()
     draw_check()
+    if selection != 100:
+        valid_moves = check_valid_moves()
+        draw_valid(valid_moves)
     
     #Event handling
     for event in pygame.event.get():

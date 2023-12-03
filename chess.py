@@ -137,14 +137,50 @@ def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 400, 70])
     screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
     screen.blit(font.render(f'Press ENTER to Restart!', True, 'white'), (210, 240))
+    
+#Calculate valid queen moves
+def check_queen(position, color):
+    moves_list = check_bishop(position, color)
+    second_list = check_rook(position, color)
+    for i in range (len(second_list)):
+        moves_list.append(second_list[i])
+    return moves_list
+
+#Draw a flashing square around if king in check
+def draw_check():
+    if turn_step < 2:
+        if 'king' in white_pieces:
+            king_index = white_pieces.index('king')
+            king_location = white_locations[king_index]
+            for i in range (len(black_options)):
+                if king_location in black_options[i]:
+                    if counter < 15:
+                        pygame.draw.rect(screen,'dark red', [white_locations[king_index][0] * 100 + 1,
+                                                             white_locations[king_index][1] * 100 + 1, 100, 100], 5)
+
+
+    else:
+        if 'king' in black_pieces:
+            king_index = black_pieces.index('king')
+            king_location = black_locations[king_index]
+            for i in range (len(white_options)):
+                if king_location in white_options[i]:
+                    if counter < 15:
+                        pygame.draw.rect(screen,'dark blue', [black_locations[king_index][0] * 100 + 1,
+                                                              black_locations[king_index][1] * 100 + 1, 100, 100], 5)
 
 # main game loop
 run = True
 while run:
     timer.tick(fps)
+    if counter < 30: 
+        counter += 1
+    else: 
+        counter = 0
     screen.fill('black')
     draw_board()
     draw_pieces()
+    draw_check()
     
     #event handling
     for event in pygame.event.get():

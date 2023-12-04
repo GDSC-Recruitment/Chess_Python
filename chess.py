@@ -150,6 +150,48 @@ def draw_game_over():
     screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
     screen.blit(font.render(f'Press ENTER to Restart!', True, 'white'), (210, 240))
     
+#Calculate valid king moves
+def check_king(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else:
+        friends_list = black_locations
+        enemies_list = white_locations
+    #8 squares to check for kings, they can go 1 square in any directions
+    targets = [(1,0), (1,1), (1,-1), (-1,0), (-1,1), (-1,-1), (0,1), (0,-1)]
+    for i in range(8):
+        target = (position[0] + targets[i][0], position[1] + targets[i][1])
+        if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7:
+            moves_list.append(target)
+    return moves_list
+
+#Calculate valid pawn moves
+def check_pawn(position, color):
+    moves_list = []
+    if color == 'white':
+        if (position[0], position[1] + 1) not in white_locations and (position[0], position[1] + 1) not in black_locations and position[1] < 7:
+            moves_list.append(position[0], position[1] + 1)
+        if (position[0], position[1] + 2) not in black_locations and (position[0], position[1] + 2) not in black_locations and position[1] == 1:
+            moves_list.append(position[0], position[1] + 2)
+        if (position[0] + 1, position[1] + 1) in black_locations: 
+            moves_list.append(position[0] + 1, position[1] + 1)
+        if (position[0] - 1, position[1] + 1) in black_locations: 
+            moves_list.append(position[0] - 1, position[1] + 1)
+            
+    else:
+        if (position[0], position[1] - 1) not in white_locations and (position[0], position[1] - 1) not in black_locations and position[1] > 0:
+            moves_list.append(position[0], position[1] - 1)
+        if (position[0], position[1] - 2) not in black_locations and (position[0], position[1] - 2) not in black_locations and position[1] == 6:
+            moves_list.append(position[0], position[1] + 2)
+        if (position[0] + 1, position[1] - 1) in white_locations: 
+            moves_list.append(position[0] + 1, position[1] - 1)
+        if (position[0] - 1, position[1] - 1) in white_locations: 
+            moves_list.append(position[0] - 1, position[1] - 1)
+    
+    return moves_list
+    
 #Calculate valid queen moves
 def check_queen(position, color):
     moves_list = check_bishop(position, color)

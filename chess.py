@@ -266,6 +266,32 @@ def check_knight(position, color):
             moves_list.append(target)
     return moves_list
 
+# add pawn promotion
+def check_promotion():
+    pawn_indexes = []
+    white_promotion = False
+    black_promotion = False
+    promote_index = 100
+    for i in range(len(white_pieces)):
+        if white_pieces[i] == 'pawn':
+            pawn_indexes.append(i)
+    for i in range(len(pawn_indexes)):
+        if white_locations[pawn_indexes[i]][1] == 7:
+            white_promotion = True
+            promote_index = pawn_indexes[i]
+    pawn_indexes = []
+    for i in range(len(black_pieces)):
+        if black_pieces[i] == 'pawn':
+            pawn_indexes.append(i)
+    for i in range(len(pawn_indexes)):
+        if black_locations[pawn_indexes[i]][1] == 0:
+            black_promotion = True
+            promote_index = pawn_indexes[i]
+    return white_promotion, black_promotion, promote_index
+
+def draw_promotion():
+    pass
+
 # main game loop
 black_options = check_options(black_pieces, black_locations, 'black')
 white_options = check_options(white_pieces, white_locations, 'white')
@@ -281,6 +307,10 @@ while run:
     draw_pieces()
     draw_captured()
     draw_check()
+    if not game_over:
+        white_promote, black_promote, promo_index = check_promotion()
+        if white_promote or black_promote:
+            draw_promotion()
     if selection != 100:
         valid_moves = check_valid_moves()
         draw_valid(valid_moves)

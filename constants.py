@@ -72,3 +72,6 @@ piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 counter = 0
 winner = ''
 game_over = False
+white_promote = False
+black_promote = False
+promo_index = 100

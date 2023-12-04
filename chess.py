@@ -290,7 +290,6 @@ def check_promotion():
     return white_promotion, black_promotion, promote_index
 
 def draw_promotion():
-    ef draw_promotion():
     pygame.draw.rect(screen, 'dark gray', [800, 0, 200, 420])
     if white_promote:
         color = 'white'
@@ -337,6 +336,7 @@ while run:
         white_promote, black_promote, promo_index = check_promotion()
         if white_promote or black_promote:
             draw_promotion()
+            check_promo_select()
     if selection != 100:
         valid_moves = check_valid_moves()
         draw_valid(valid_moves)

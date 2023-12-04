@@ -1,15 +1,16 @@
 # Chess_Python
 
 # **_Table of content_**
-1. [Background](#Background)
-   - [Introduction](#introduction)
-   - [Group members & Task allocation](#Group_members&Task_allocation)
-   - [How to run project](#how-to-run-project)
-2. [Game](#Game)
-   - [About the game](#About-the-game)
-   - [Content](#Content)
-   - [How to play](#how-to-play)
-3. [Challenging](#Challenging)
+1. [Background](#1background)
+   - [Introduction](#a-introduction)
+   - [Group members & Task allocation](#b-team-members-and-roles)
+   - [How to run project](#c-how-to-run-project)
+2. [Project details](#2-project-detail)
+   - [About the project](#a-about-the-project)
+   - [Contents](#b-content)
+   - [How to play](#c-how-to-play)
+3. [Challenging](#3-challenging)
+4. [Images](#4-images)
 
 # **1.Background**
 ## a. _Introduction._
@@ -19,7 +20,7 @@ This is our project for GDSC Recruiment Round 3 about chess.</p>
 </div>
 
 
-## b. _Team members and roles._
+## b. _Team members and roles_
 | Number |   Name   | Roles |
 | :----: | :------: | :----------------------------------------------:|
 |   1    |   Vo Hoai Bao   |Team Leader, Tester, Back-end  

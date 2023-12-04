@@ -153,4 +153,51 @@ def draw_game_over():
     screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
     screen.blit(font.render(f'Press ENTER to Restart!', True, 'white'), (210, 240))
 
+def check_promotion():
+    pawn_indexes = []
+    white_promotion = False
+    black_promotion = False
+    promote_index = 100
+    for i in range(len(white_pieces)):
+        if white_pieces[i] == 'pawn':
+            pawn_indexes.append(i)
+    for i in range(len(pawn_indexes)):
+        if white_locations[pawn_indexes[i]][1] == 7:
+            white_promotion = True
+            promote_index = pawn_indexes[i]
+    pawn_indexes = []
+    for i in range(len(black_pieces)):
+        if black_pieces[i] == 'pawn':
+            pawn_indexes.append(i)
+    for i in range(len(pawn_indexes)):
+        if black_locations[pawn_indexes[i]][1] == 0:
+            black_promotion = True
+            promote_index = pawn_indexes[i]
+    return white_promotion, black_promotion, promote_index
+
+def draw_promotion():
+    pygame.draw.rect(screen, 'dark gray', [800, 0, 200, 420])
+    if white_promote:
+        color = 'white'
+        for i in range(len(white_promotions)):
+            piece = white_promotions[i]
+            index = piece_list.index(piece)
+            screen.blit(white_images[index], (860, 5 + 100 * i))
+    elif black_promote:
+        color = 'black'
+        for i in range(len(black_promotions)):
+            piece = black_promotions[i]
+            index = piece_list.index(piece)
+            screen.blit(black_images[index], (860, 5 + 100 * i))
+    pygame.draw.rect(screen, color, [800, 0, 200, 420], 8)\
+    
+    def check_promo_select():
+    mouse_pos = pygame.mouse.get_pos()
+    left_click = pygame.mouse.get_pressed()[0]
+    x_pos = mouse_pos[0] // 100
+    y_pos = mouse_pos[1] // 100
+    if white_promote and left_click and x_pos > 7 and y_pos < 4:
+        white_pieces[promo_index] = white_promotions[y_pos]
+    elif black_promote and left_click and x_pos > 7 and y_pos < 4:
+        black_pieces[promo_index] = black_promotions[y_pos]
 

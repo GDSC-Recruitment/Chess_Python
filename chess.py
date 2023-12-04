@@ -290,7 +290,33 @@ def check_promotion():
     return white_promotion, black_promotion, promote_index
 
 def draw_promotion():
-    pass
+    ef draw_promotion():
+    pygame.draw.rect(screen, 'dark gray', [800, 0, 200, 420])
+    if white_promote:
+        color = 'white'
+        for i in range(len(white_promotions)):
+            piece = white_promotions[i]
+            index = piece_list.index(piece)
+            screen.blit(white_images[index], (860, 5 + 100 * i))
+    elif black_promote:
+        color = 'black'
+        for i in range(len(black_promotions)):
+            piece = black_promotions[i]
+            index = piece_list.index(piece)
+            screen.blit(black_images[index], (860, 5 + 100 * i))
+    pygame.draw.rect(screen, color, [800, 0, 200, 420], 8)
+
+
+def check_promo_select():
+    mouse_pos = pygame.mouse.get_pos()
+    left_click = pygame.mouse.get_pressed()[0]
+    x_pos = mouse_pos[0] // 100
+    y_pos = mouse_pos[1] // 100
+    if white_promote and left_click and x_pos > 7 and y_pos < 4:
+        white_pieces[promo_index] = white_promotions[y_pos]
+    elif black_promote and left_click and x_pos > 7 and y_pos < 4:
+        black_pieces[promo_index] = black_promotions[y_pos]
+
 
 # main game loop
 black_options = check_options(black_pieces, black_locations, 'black')

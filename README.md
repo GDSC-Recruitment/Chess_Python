@@ -85,5 +85,10 @@ Most people on our team are coding and using GitHub together for the first time,
 <img src="assets\screenshots\white_won.png" alt="">
 </div>
 
+# **5. References**
+
+- Youtuber [LeMaster Tech](https://www.youtube.com/@lemastertech).
+
+
 
 
